@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use crate::component::Component;
 
-struct ECS{
+pub struct ECS{
     component_to_entity:HashMap<u32,u32>,
     entity_to_component:HashMap<u32, HashSet<u32>>,
     component_types: HashMap<u32, HashSet<u32>>
