@@ -1,14 +1,14 @@
 use std::collections::{HashMap, HashSet};
-use crate::component::Component;
+use crate::ecs::component::Component;
 
 pub struct ECS{
-    component_to_entity:HashMap<u32,u32>,
-    entity_to_component:HashMap<u32, HashSet<u32>>,
-    component_types: HashMap<u32, HashSet<u32>>
+    pub component_to_entity:HashMap<u64,u64>,
+    pub entity_to_component:HashMap<u64, HashSet<u64>>,
+    pub component_types: HashMap<u64, HashSet<u64>>
 }
 
 impl ECS{
-    fn link(&mut self, entity: u32, component: &dyn Component) -> Result<&mut ECS, ECSErrors>{
+    pub(crate) fn link(&mut self, entity: u64, component: &dyn Component) -> Result<&mut ECS, ECSErrors>{
         let c_type = component.get_type_stack();
         let c_handle = component.get_handle();
 
@@ -47,6 +47,7 @@ impl ECS{
     }
 }
 
-enum ECSErrors{
+#[derive(Debug)]
+pub enum ECSErrors{
     ComponentAlreadyLinked
 }

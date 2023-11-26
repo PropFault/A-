@@ -14,7 +14,7 @@ impl RngHandleGen {
 }
 
 impl HandleGen for RngHandleGen{
-    fn gen(&mut self) -> u32{
+    fn gen(&mut self) -> u64{
         return self.rng.gen();
     }
 }
