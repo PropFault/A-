@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use std::sync::{Arc, RwLock};
 use std::time::Instant;
 use glam::Vec3;
-use rand::Rng;
 use sdl2::event::Event;
 use sdl2::rect::Rect;
 use sdl2::render::Texture;
@@ -29,6 +28,12 @@ struct Spatial{
     handle: u64,
     parent: Option<Arc<RwLock<Spatial>>>,
     child: Vec<Arc<RwLock<Spatial>>>
+}
+
+impl Spatial {
+    pub fn new(pos: Vec3, global_pos: Vec3, handle: u64) -> Self {
+        Self { pos, global_pos, handle, parent: (), child: () }
+    }
 }
 
 impl Component for Spatial{
@@ -113,6 +118,7 @@ impl<'a> System for SpriteRenderSystem<'a>{
 
 
 fn main() {
+    let world_root = Spatial::new()
     let mut gen = RngHandleGen::new();
     let mut component_atlas: HashMap<u64, Arc<RwLock<dyn Any>>> = HashMap::new();
     let render_kit = Arc::new(SDL2RenderKit::new());
