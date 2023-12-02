@@ -9,5 +9,5 @@ edition = "2021"
 glam = "0.24.2"
 rand = "0.8.5"
 [dependencies.sdl2]
-features = ["bundled"]
+features = ["bundled", "image"]
 version = "0.36.0"
