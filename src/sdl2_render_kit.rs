@@ -18,8 +18,8 @@ impl SDL2RenderKit {
             .build()
             .unwrap();
 
-        let mut conc_canvas = window.into_canvas().build().unwrap();
-        let mut canvas = RwLock::new(conc_canvas);
+        let conc_canvas = window.into_canvas().build().unwrap();
+        let canvas = RwLock::new(conc_canvas);
 
         Self { context: sdl_context, video_subsystem, canvas}
     }

@@ -1,7 +1,7 @@
 use std::any::Any;
 use std::collections::HashMap;
-use std::ops::Deref;
-use std::ops::DerefMut;
+
+
 use std::sync::{Arc, RwLock};
 use std::time::Instant;
 use glam::Vec3;
@@ -115,12 +115,12 @@ impl<'a> System for SpriteRenderSystem<'a>{
 fn main() {
     let mut gen = RngHandleGen::new();
     let mut component_atlas: HashMap<u64, Arc<RwLock<dyn Any>>> = HashMap::new();
-    let mut render_kit = Arc::new(SDL2RenderKit::new());
-    let mut texture_creator = Arc::new({
+    let render_kit = Arc::new(SDL2RenderKit::new());
+    let texture_creator = Arc::new({
         let l = render_kit.canvas.write().unwrap();
         l.texture_creator()
     });
-    let mut texture_atlas = Arc::new(RwLock::new(Atlas::<Texture>::new()));
+    let texture_atlas = Arc::new(RwLock::new(Atlas::<Texture>::new()));
 
     let mut ecs = ECS::new();
     let mut system_atlas: Atlas<Box<dyn System>> = Atlas::new();
@@ -159,7 +159,7 @@ fn main() {
         }
         { // System processing and rendering
             render_kit.canvas.write().unwrap().clear();
-            for mut system in & mut system_atlas.data.values_mut(){
+            for system in & mut system_atlas.data.values_mut(){
                 let c_handles = ecs.component_types.get(&system.handles_component_type());
                 let mut comp: HashMap<u64, Arc<RwLock<dyn Any>>> = HashMap::new();
                 for cHandle in c_handles.unwrap(){
